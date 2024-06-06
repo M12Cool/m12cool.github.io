@@ -59,11 +59,6 @@
     <div class="elapsed-time">
         <p id="elapsed"></p>
     </div>
-    <div class="message">
-        <h1>Erinnere dich:</h1>
-        <i>Es wird zwar nie mehr Schularbeiten, Tests, Prüfungen und Hausaufgaben geben, wie es all diese Jahre war.</i>
-        <i>Es wird aber auch keine Klassengemeinschaft geben, keine Ausflüge, keine gemeinsamen Sportstunden, kein "Mathe isch drin".</i>
-    </div>
 
     <script>
         function updateCountdown() {
@@ -89,7 +84,7 @@
             let countdownHTML = `${days} Tage ${hours} Stunden ${minutes} Minuten ${seconds} Sekunden<br>`;
             if (days <= 20) {
                 countdownHTML += `Fortschritt: ${progressPercentage}%
-                <br><br><b style="font-size: 1.5em; margin-bottom: 0px">MAKE YOUR LAST DAYS COUNT!!</b>`;
+                <br>`;
             } else {
                 countdownHTML += `Fortschritt: ${progressPercentage}%`;
             }
