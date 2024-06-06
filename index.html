@@ -81,7 +81,7 @@
 
             const progressPercentage = (elapsedTime / totalTime * 100).toFixed(2);
 
-            let countdownHTML = `${days} Tage ${hours} Stunden ${minutes} Minuten ${seconds} Sekunden<br>`;
+            let countdownHTML = `<i>${days} Tage ${hours} Stunden ${minutes} Minuten ${seconds} Sekunden</i><br>`;
             if (days <= 20) {
                 countdownHTML += `Fortschritt: ${progressPercentage}%
                 <br>`;
