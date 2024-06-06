@@ -1,8 +1,115 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown bis zum Schulschluss</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            flex-direction: column;
+        }
+        .countdown {
+            text-align: center;
+            padding: 20px;
+            background-color: green;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+        .countdown h1 {
+            font-size: 3em;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+        .countdown p {
+            font-size: 2em;
+            color: #ffffff;
+        }
+        .elapsed-time {
+            text-align: center;
+        }
+        .elapsed-time h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .elapsed-time p {
+            font-size: 1.5em;
+        }
 
+        .message {
+            text-align: center;
+        }
+        .message p {
+            font-size: 1.5em;
+        }
+    </style>
+</head>
 <body>
-  <h1>hallo</h1>
-  <a href="index.php">fshbgaifuhiasdasoduhijfsdaoijhfsdaouhijkn</a></body>
+    <div class="countdown">
+        <h1>Countdown bis zum Schulschluss</h1>
+        <p id="timer"></p>
+    </div>
+    <div class="elapsed-time">
+        <p id="elapsed"></p>
+    </div>
+    <div class="message">
+        <h1>Erinnere dich:</h1>
+        <i>Es wird zwar nie mehr Schularbeiten, Tests, Prüfungen und Hausaufgaben geben, wie es all diese Jahre war.</i>
+        <i>Es wird aber auch keine Klassengemeinschaft geben, keine Ausflüge, keine gemeinsamen Sportstunden, kein "Mathe isch drin".</i>
+    </div>
 
+    <script>
+        function updateCountdown() {
+            const schoolEndDate = new Date('June 14, 2024 10:25:00 GMT+0200');
+            const startDate = new Date('September 12, 2011 08:00:00 GMT+0200');
+            const now = new Date();
+            const totalTime = schoolEndDate - startDate;
+            const elapsedTime = now - startDate;
+            const remainingTime = schoolEndDate - now;
+
+            const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+            const eDays = Math.floor(elapsedTime / (1000 * 60 * 60 * 24));
+            const eHours = Math.floor((elapsedTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const eMinutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
+            const eSeconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+
+            const progressPercentage = (elapsedTime / totalTime * 100).toFixed(2);
+
+            let countdownHTML = `${days} Tage ${hours} Stunden ${minutes} Minuten ${seconds} Sekunden<br>`;
+            if (days <= 20) {
+                countdownHTML += `Fortschritt: ${progressPercentage}%
+                <br><br><b style="font-size: 1.5em; margin-bottom: 0px">MAKE YOUR LAST DAYS COUNT!!</b>
+                <br><a href="extend.html" style="font-size:0.5em;">How to extend time?</a>`;
+            } else {
+                countdownHTML += `Fortschritt: ${progressPercentage}%`;
+            }
+
+            document.getElementById('timer').innerHTML = countdownHTML;
+
+            document.getElementById('elapsed').innerHTML = 
+                `<h1 style="font-size: 1.5em;">Vergangene Zeit seit dem ersten Schultag (12. September 2011)</h1>
+                ${eDays} Tage ${eHours} Stunden ${eMinutes} Minuten ${eSeconds} Sekunden`;
+
+            if (remainingTime < 0) {
+                document.getElementById('timer').innerHTML = "Der Schulschluss ist erreicht!";
+                document.getElementById('elapsed').innerHTML = "";
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
 </html>
+
