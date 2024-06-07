@@ -11,7 +11,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f0f0f0;
+            background-color: #3a3a3a; /* Changed to gray */
             margin: 0;
             flex-direction: column;
         }
@@ -19,6 +19,14 @@
             text-align: center;
             padding: 20px;
             background-color: green;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+        .info {
+            text-align: center;
+            padding: 20px;
+            background-color: darkturquoise;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             margin-bottom: 20px;
@@ -42,7 +50,7 @@
         .elapsed-time p {
             font-size: 1.5em;
         }
-
+    
         .message {
             text-align: center;
         }
@@ -59,15 +67,40 @@
     <div class="elapsed-time">
         <p id="elapsed"></p>
     </div>
+    <div class="info">
+        <b>Erschte Version des Timers, magari kimmp effektive Schualtoge no</b>
+    </div>
 
     <script>
-        function updateCountdown() {
-            const schoolEndDate = new Date('June 14, 2024 10:25:00 GMT+0200');
-            const startDate = new Date('September 12, 2011 08:00:00 GMT+0200');
+        function getCurrentSchoolYearDates() {
             const now = new Date();
-            const totalTime = schoolEndDate - startDate;
+            let startDate, endDate;
+
+
+            // Hier die tatsächlichen Start- und Enddaten des Schuljahres eintragen
+            startDate2023 = new Date('September 11, 2023 07:55:00 GMT+0200');
+            endDate2024 = new Date('June 14, 2024 10:25:00 GMT+0200');
+            startDate2024 = new Date('September 6, 2024 07:55:00 GMT+0200');
+            endDate2025 = new Date('June 13, 2025 10:25:00 GMT+0200');
+            startDate2025 = new Date('June 13, 5024 10:25:00 GMT+0200')
+            if (now >= startDate2023&&now < startDate2024) {
+                startDate = startDate2023
+                endDate = endDate2024
+            } else if (now >= startDate2024&&now < startDate2025) {
+                startDate = startDate2024;
+                endDate = endDate2025;
+            }
+            // Weitere Jahre hinzufügen, falls nötig
+
+            return { startDate, endDate };
+        }
+
+        function updateCountdown() {
+            const { startDate, endDate } = getCurrentSchoolYearDates();
+            const now = new Date();
+            const totalTime = endDate - startDate;
             const elapsedTime = now - startDate;
-            const remainingTime = schoolEndDate - now;
+            const remainingTime = endDate - now;
 
             const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
             const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -83,8 +116,7 @@
 
             let countdownHTML = `<i>${days} Tage ${hours} Stunden ${minutes} Minuten ${seconds} Sekunden</i><br>`;
             if (days <= 20) {
-                countdownHTML += `Fortschritt: ${progressPercentage}%
-                <br>`;
+                countdownHTML += `Fortschritt: ${progressPercentage}%<br>`;
             } else {
                 countdownHTML += `Fortschritt: ${progressPercentage}%`;
             }
@@ -92,7 +124,7 @@
             document.getElementById('timer').innerHTML = countdownHTML;
 
             document.getElementById('elapsed').innerHTML = 
-                `<h1 style="font-size: 1.5em;">Vergangene Zeit seit dem ersten Schultag (12. September 2011)</h1>
+                `<h1 style="font-size: 1.5em;">Vergangene Zeit seit dem ersten Schultag (${startDate.toLocaleDateString('de-DE')})</h1>
                 ${eDays} Tage ${eHours} Stunden ${eMinutes} Minuten ${eSeconds} Sekunden`;
 
             if (remainingTime < 0) {
@@ -106,4 +138,3 @@
     </script>
 </body>
 </html>
-
