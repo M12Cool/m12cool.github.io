@@ -23,34 +23,26 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             margin-bottom: 20px;
         }
-        .info {
+        .matura-countdown {
             text-align: center;
             padding: 20px;
-            background-color: darkturquoise;
+            background-color: rgb(209, 0, 0);
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             margin-bottom: 20px;
         }
-        .countdown h1 {
+        .elapsed-time {
+            text-align: center;
+        }
+        .countdown h1, .matura-countdown h1, .elapsed-time h1 {
             font-size: 3em;
             color: #ffffff;
             margin-bottom: 20px;
         }
-        .countdown p {
+        .countdown p, .matura-countdown p, .elapsed-time p {
             font-size: 2em;
             color: #ffffff;
         }
-        .elapsed-time {
-            text-align: center;
-        }
-        .elapsed-time h1 {
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-        .elapsed-time p {
-            font-size: 1.5em;
-        }
-    
         .message {
             text-align: center;
         }
@@ -62,7 +54,11 @@
 <body>
     <div class="countdown">
         <h1>Countdown bis zum Schulschluss</h1>
-        <p id="timer"></p>
+        <p id="school-timer"></p>
+    </div>
+    <div class="matura-countdown">
+        <h1>Countdown bis zum Matura-Schluss</h1>
+        <p id="matura-timer"></p>
     </div>
     <div class="elapsed-time">
         <p id="elapsed"></p>
@@ -74,16 +70,24 @@
     <script>
         function updateCountdown() {
             const schoolEndDate = new Date('June 14, 2024 10:25:00 GMT+0200');
+            const maturaEndDate = new Date('July 5, 2024 19:00:00 GMT+0200');
             const startDate = new Date('September 12, 2011 08:00:00 GMT+0200');
+
             const now = new Date();
             const totalTime = schoolEndDate - startDate;
             const elapsedTime = now - startDate;
-            const remainingTime = schoolEndDate - now;
+            const remainingTimeSchool = schoolEndDate - now;
+            const remainingTimeMatura = maturaEndDate - now;
 
-            const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+            const daysSchool = Math.floor(remainingTimeSchool / (1000 * 60 * 60 * 24));
+            const hoursSchool = Math.floor((remainingTimeSchool % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutesSchool = Math.floor((remainingTimeSchool % (1000 * 60 * 60)) / (1000 * 60));
+            const secondsSchool = Math.floor((remainingTimeSchool % (1000 * 60)) / 1000);
+
+            const daysMatura = Math.floor(remainingTimeMatura / (1000 * 60 * 60 * 24));
+            const hoursMatura = Math.floor((remainingTimeMatura % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutesMatura = Math.floor((remainingTimeMatura % (1000 * 60 * 60)) / (1000 * 60));
+            const secondsMatura = Math.floor((remainingTimeMatura % (1000 * 60)) / 1000);
 
             const eDays = Math.floor(elapsedTime / (1000 * 60 * 60 * 24));
             const eHours = Math.floor((elapsedTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -92,23 +96,28 @@
 
             const progressPercentage = (elapsedTime / totalTime * 100).toFixed(2);
 
-            let countdownHTML = `<i>${days} Tage ${hours} Stunden ${minutes} Minuten ${seconds} Sekunden</i><br>`;
-            if (days <= 20) {
-                countdownHTML += `Fortschritt: ${progressPercentage}%
-                <br>`;
+            let schoolCountdownHTML = `<i>${daysSchool} Tage ${hoursSchool} Stunden ${minutesSchool} Minuten ${secondsSchool} Sekunden</i><br>`;
+            if (daysSchool <= 20) {
+                schoolCountdownHTML += `Fortschritt: ${progressPercentage}%<br>`;
             } else {
-                countdownHTML += `Fortschritt: ${progressPercentage}%`;
+                schoolCountdownHTML += `Fortschritt: ${progressPercentage}%`;
             }
 
-            document.getElementById('timer').innerHTML = countdownHTML;
+            let maturaCountdownHTML = `<i>${daysMatura} Tage ${hoursMatura} Stunden ${minutesMatura} Minuten ${secondsMatura} Sekunden</i><br>`;
 
+            document.getElementById('school-timer').innerHTML = schoolCountdownHTML;
+            document.getElementById('matura-timer').innerHTML = maturaCountdownHTML;
+
+            if(remainingTimeSchool >= 0)
             document.getElementById('elapsed').innerHTML = 
                 `<h1 style="font-size: 1.5em;">Vergangene Zeit seit dem ersten Schultag (12. September 2011)</h1>
                 ${eDays} Tage ${eHours} Stunden ${eMinutes} Minuten ${eSeconds} Sekunden`;
 
-            if (remainingTime < 0) {
-                document.getElementById('timer').innerHTML = "Der Schulschluss ist erreicht!";
-                document.getElementById('elapsed').innerHTML = "";
+            if (remainingTimeSchool < 0) {
+                document.getElementById('school-timer').innerHTML = "Der Schulschluss ist erreicht!";
+            }
+            if (remainingTimeMatura < 0) {
+                document.getElementById('matura-timer').innerHTML = "Matura wurde geschrieben! Nun ist es wirklich vorbei";
             }
         }
 
@@ -117,4 +126,3 @@
     </script>
 </body>
 </html>
-
