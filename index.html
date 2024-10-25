@@ -68,7 +68,7 @@
         <p id="elapsed"></p>
     </div>
     <div class="info">
-        <b>Schiane Ferien, bis nächstes Johr!</b>
+        <b>Ollm no online!</b>
     </div>
     <div>
         <a href="5iatimer.html"><button>Timer für die 5IA</button></a>
@@ -85,14 +85,23 @@
             endDate2024 = new Date('June 14, 2024 10:25:00 GMT+0200');
             startDate2024 = new Date('September 6, 2024 07:55:00 GMT+0200');
             endDate2025 = new Date('June 13, 2025 10:25:00 GMT+0200');
-            startDate2025 = new Date('June 13, 5024 10:25:00 GMT+0200')
+            startDate2025 = new Date('September 8, 2025 07:55:00 GMT+0200');
+            endDate2026 = new Date('June 16, 2026 10:25:00 GMT+0200');
+            
+            
+            startDate5024 = new Date('September 13, 5024 10:25:00 GMT+0200');
+
             if (now >= startDate2023&&now < startDate2024) {
                 startDate = startDate2023
                 endDate = endDate2024
             } else if (now >= startDate2024&&now < startDate2025) {
                 startDate = startDate2024;
                 endDate = endDate2025;
+            } else if (now >= startDate2025&&now < startDate5024) {
+                startDate = startDate2025;
+                endDate = endDate2026;
             }
+            
             // Weitere Jahre hinzufügen, falls nötig
 
             return { startDate, endDate };
